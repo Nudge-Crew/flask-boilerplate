@@ -2,6 +2,7 @@ import logging
 import os
 
 class Config(object):
+    API_PREFIX = os.getenv("API_PREFIX", "/api")
     DEBUG = os.getenv("ENVIRONMENT") == "DEV"
     HOST = os.getenv("FLASK_RUN_HOST")
     PORT = int(os.getenv("FLASK_RUN_PORT", "3000"))

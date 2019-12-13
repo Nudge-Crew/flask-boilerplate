@@ -5,7 +5,12 @@ from flask_restful.reqparse import Argument
 from app.repositories import user_repository
 from app.utils import param_parser
 
+
 class user_resource(Resource):
+    @staticmethod
+    def all():
+        return "Hallo Wereld"
+
     @staticmethod
     def get(first_name, last_name, email):
         user = user_repository.get(first_name=first_name, last_name=last_name, email=email)
@@ -20,10 +25,10 @@ class user_resource(Resource):
     )
     def post(first_name, last_name, email, access_token):
         user = user_repository.create(
-            first_name = first_name,
-            last_name = last_name,
-            email = email,
-            access_token = access_token
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            access_token=access_token
         )
 
         return jsonify({
