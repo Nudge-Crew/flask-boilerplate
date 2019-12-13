@@ -1,9 +1,13 @@
 # flask-boilerplate
 A Flask Api Boilerplate
 
-# Installation Guide
-# Virtual Environment
-# Linux and MacOS
+# Project Installation
+## Environmental Variables
+rename `.flaskenv.example` to `.flaskenv` and change the variable values accordingly.
+
+# Environment Installation
+## Virtual Environment
+### Linux and MacOS
 
 The venv folder contains all dependencies which are needed to run this project. To enter the venv virtual environment use:
 
@@ -19,7 +23,7 @@ after installing a new package use:
 
 to update the requirments folder
 
-# Windows
+### Windows
 The venv folder contains all dependencies which are needed to run this project. To enter the venv virtual environment use:
 
 ``` source venv/bin/activate ```
@@ -34,7 +38,7 @@ after installing a new package use:
 
 to update the requirments folder
 
-## Important Note
+#### Important Note
 Make sure to have python37 and python37\Scripts added in your environmental path.
 Else command such as ```virtualenv venv``` may not work.
 
