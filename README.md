@@ -1,10 +1,6 @@
 # flask-boilerplate
 A Flask Api Boilerplate
 
-# Project Installation
-## Environmental Variables
-rename `.flaskenv.example` to `.flaskenv` and change the variable values accordingly.
-
 # Environment Installation
 ## Virtual Environment
 ### Linux and MacOS
@@ -45,3 +41,21 @@ Else command such as ```virtualenv venv``` may not work.
 Example environmental variables:
 
 ![Environmental Variables](https://i.imgur.com/2u3va11.png "Environmental Variables")
+
+# Project Installation
+## Environmental Variables
+rename `.flaskenv.example` to `.flaskenv` and change the variable values accordingly.
+
+## Database
+`We currently make use of a sqlite database for testing`
+
+Enter the portgreSQL database details in `.flaskenv`:
+```
+DB_HOST={database_host}
+DB_PORT={database_port}
+DB_USER={database_user}
+DB_PASSWORD={database_user_password}
+DB_NAME={database_name}
+```
+
+execute `flask db migrate` in your console (e.g in your virtual environment)
