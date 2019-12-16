@@ -3,6 +3,10 @@ from app.models import User
 
 class user_repository:
     @staticmethod
+    def all():
+        return User.query.all()
+
+    @staticmethod
     def get(first_name, last_name, email):
         return User.query.filter_by(first_name=first_name, last_name=last_name, email=email).one()
 

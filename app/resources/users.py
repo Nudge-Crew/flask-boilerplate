@@ -7,11 +7,18 @@ from app.utils import param_parser
 
 
 class user_resource(Resource):
-    method_decorators = {'get': [all]}
 
     @staticmethod
     def all():
-        return "Hallo Wereld"
+        users = user_repository.all()
+        results = []
+
+        for u in users:
+            results.append(u.json)
+
+        return jsonify({
+            "users": results
+        })
 
     @staticmethod
     def get(first_name, last_name, email):
