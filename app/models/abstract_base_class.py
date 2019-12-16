@@ -7,6 +7,7 @@ from sqlalchemy.orm import aliased
 from app import db
 
 
+# Inspired by https://wakatime.com/blog/32-flask-part-1-sqlalchemy-models-to-json
 class MetaBaseModel(db.Model.__class__):
     # Define MetaClass for the BaseModel
     def __init__(self, *args):
