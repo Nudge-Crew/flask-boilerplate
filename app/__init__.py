@@ -3,11 +3,13 @@ from flask.blueprints import Blueprint
 from .config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flasgger import Swagger
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+Swagger = Swagger(app)
 
 from app import routes
 
