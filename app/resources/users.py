@@ -7,6 +7,8 @@ from app.utils import param_parser
 
 
 class user_resource(Resource):
+    method_decorators = {'get': [all]}
+
     @staticmethod
     def all():
         return "Hallo Wereld"
