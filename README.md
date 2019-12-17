@@ -47,7 +47,7 @@ Example environmental variables:
 rename `.flaskenv.example` to `.flaskenv` and change the variable values accordingly.
 
 ## Database
-`We currently make use of a sqlite database for testing`
+Change the database driver to your database. in `.flaskenv` change `DB_DRIVER` to either `LOCAL` for Sqlite or `POSTGRES` for PostgreSQL.
 
 Enter the portgreSQL database details in `.flaskenv`:
 ```
@@ -57,6 +57,7 @@ DB_USER={database_user}
 DB_PASSWORD={database_user_password}
 DB_NAME={database_name}
 ```
+You do not need to enter these variables when using the Sqlite driver, and you'll only ned to execute the commands below.
 
 execute `flask db upgrade` in your console (e.g in your virtual environment)
 
