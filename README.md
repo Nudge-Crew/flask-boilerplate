@@ -58,9 +58,7 @@ DB_PASSWORD={database_user_password}
 DB_NAME={database_name}
 ```
 
-execute `flask db migrate` in your console (e.g in your virtual environment)
-
-If you are migrations behind (when e.g updating to a newer version), you'll need to execute `flask db upgrade`.
+execute `flask db upgrade` in your console (e.g in your virtual environment)
 
 ## Run Flask
 In order to run flask, you just need to execute `flask run`.
@@ -154,8 +152,130 @@ from .users import user_repository
 ```
 
 ## Creation of Resources
+Resources can be found under `app.resources` directory.
+In this directory all resources named corresponding to their `model` in plural with a classname named `{model}_resource`.
+A resource should look similar to the one below:
+
+Filename: `app/resources/users.py`
+```python
+from flask.json import jsonify
+
+from app.repositories import user_repository
+
+
+class user_resource:
+
+    @staticmethod
+    def all():
+        users = user_repository.all()
+        results = []
+
+        for u in users:
+            results.append(u.json)
+
+        return jsonify({
+            "users": results
+        })
+
+    @staticmethod
+    def get(first_name, last_name, email):
+        user = user_repository.get(first_name=first_name, last_name=last_name, email=email)
+
+        return jsonify({
+            "user": user.json
+        })
+
+    @staticmethod
+    def post(first_name, last_name, email, access_token):
+        user = user_repository.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            access_token=access_token
+        )
+
+        return jsonify({
+            "user": user.json
+        })
+
+    @staticmethod
+    def put(first_name, last_name, email, access_token):
+        user = user_repository.update(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            access_token=access_token
+        )
+
+        return jsonify({
+            "user": user.json
+        })
+
+```
+
+Here you can see methods being used from `BaseModel` and `MetaBaseModel` such as `user.json`, which converts the User object to `JSON`.
+Also make sure to always use `jsonify` in your return statement, to ensure you get a `JSON` response.
+In order to export the class, make sure to import it in `__init__.py` in the same directory.
+
+Filename: `app/resources/__init__.py`
+```python
+from .users import user_resource
+```
 
 ## Creation of Routes (API Endpoints)
+Routes can be found under `app.routes` directory.
+In this directory all routes named corresponding to their `model` in plural.
+For each resource a new route file should be created, to keep a good overview of all the routes.
+A route should look similar to the one below:
+
+Filename: `app/routes/users.py`
+```python
+from flask import Blueprint
+
+from app.resources import user_resource
+
+PREFIX = "users"
+
+USER_BLUEPRINT = Blueprint(PREFIX, __name__)
+
+
+@USER_BLUEPRINT.route('/', methods=['GET'])
+def all():
+    """
+    Returning a list of users
+    ---
+    responses:
+        200:
+            description: A list of users
+            schema:
+                $ref: '#/models/User'
+    """
+    return user_resource.all()
+```
+Here the value in `PREFIX` will be the endpoint (e.g `{url}/api/users`).
+In order to export the class, make sure to import it in `__init__.py` in the same directory.
+
+Filename: `app/routes/__init__.py`
+```python
+from .users import USER_BLUEPRINT
+```
+
+### Swagger Documentation
+In the routes you'll also have the possibility to add swagger specifications such as description, responses etc...
+More can be found in de [flasgger documentation](https://github.com/flasgger/flasgger).
 
 ## Creation of a new migration
+The database tables are based of your models.
+It's therefore important to use the [SQLAlchemy ORM](https://docs.sqlalchemy.org/en/13/orm/index.html) documentation for reference.
+
+To add a new migration use `flask db migrate`, this will go through the models and create migrations based of those models.
+Once completed execute `flask db upgrade`.
+
+### Important
+Alembic may not detect everything specified, it's therefore recommended to check the migrations to be correct.
+This can be found in `migrations/versions`.
+
+### Downgrading
+Made a mistake during development, and want to downgrade a migration back? use `flask db downgrade` to back to the previous migration.
+
 
